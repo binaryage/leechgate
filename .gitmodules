@@ -1,0 +1,3 @@
+[submodule "php-ga"]
+	path = php-ga
+	url = git://github.com/binaryage/php-ga.git
