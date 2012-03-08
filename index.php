@@ -105,7 +105,9 @@ function leechgate_track_ga($config) {
 		// track it!
 		$tracker->trackEvent($event, $session, $visitor);
 	} catch (Exception $e) {
-		fwrite(STDERR, "Caught exception in leechgate_track_ga: ".$e->getMessage()."\n");
+		$fe = fopen('php://stderr', 'w');
+		fwrite($fe, "Caught exception in leechgate_track_ga: ".$e->getMessage()."\n");
+		fclose($fe);
 	}
 }
 
