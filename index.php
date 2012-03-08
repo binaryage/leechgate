@@ -90,19 +90,23 @@ function leechgate_expand_config(&$config) {
 }
 
 function leechgate_track_ga($config) {
-	// prepare GA structures
-	$tracker = new GoogleAnalytics\Tracker($config['gaid'], $config['normalized_host']);
-	$visitor = new GoogleAnalytics\Visitor();
-	$visitor->fromServerVar($_SERVER);
-	if ($config['utma_cookie']) {
-		$visitor->fromUtma($config['utma_cookie']);
-	}
-	$session = new GoogleAnalytics\Session();
-	$event = new GoogleAnalytics\Event($config['normalized_host'], $config['product'], $config['product_version']);
-	$event->setNoninteraction(true);
+	try {
+		// prepare GA structures
+		$tracker = new GoogleAnalytics\Tracker($config['gaid'], $config['normalized_host']);
+		$visitor = new GoogleAnalytics\Visitor();
+		$visitor->fromServerVar($_SERVER);
+		if ($config['utma_cookie']) {
+			$visitor->fromUtma($config['utma_cookie']);
+		}
+		$session = new GoogleAnalytics\Session();
+		$event = new GoogleAnalytics\Event($config['normalized_host'], $config['product'], $config['product_version']);
+		$event->setNoninteraction(true);
 	
-	// track it!
-	$tracker->trackEvent($event, $session, $visitor);
+		// track it!
+		$tracker->trackEvent($event, $session, $visitor);
+	} catch (Exception $e) {
+		fwrite(STDERR, "Caught exception in leechgate_track_ga: ".$e->getMessage()."\n");
+	}
 }
 
 function leechgate_redirect($config) {
