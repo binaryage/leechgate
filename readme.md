@@ -36,24 +36,24 @@ When someone requests http://downloads.binaryage.com/TotalTerminal-1.2.3.dmg, it
   
   * DNS, S3
     * originally:
-      * had S3 bucket: downloads.binaryage.com
-	  * had DNS mapping: downloads.binaryage.com (DNS) -> downloads.binaryage.com.s3.amazonaws.com (S3 bucket)
+      * had S3 bucket: `downloads.binaryage.com`
+	  * had DNS mapping: `downloads.binaryage.com` (DNS) -> `downloads.binaryage.com.s3.amazonaws.com` (S3 bucket)
 
     * newly:
-      * created new Heroku app: binaryage-leechgate with content of this repo
-      * created new S3 bucket: downloads-1.binaryage.com
-	  * copied S3 bucket content: from downloads.binaryage.com to downloads-1.binaryage.com
-	  * set new DNS mapping: downloads-1.binaryage.com (DNS) -> downloads-1.binaryage.com.s3.amazonaws.com (S3 bucket)
-	  * modified original DNS mapping: downloads.binaryage.com (DNS) -> binaryage-leechgate.herokuapp.com (Heroku)
+      * created new Heroku app: `binaryage-leechgate` with content of this repo
+      * created new S3 bucket: `downloads-1.binaryage.com`
+	  * copied S3 bucket content: from `downloads.binaryage.com` to `downloads-1.binaryage.com`
+	  * set new DNS mapping: `downloads-1.binaryage.com` (DNS) -> `downloads-1.binaryage.com.s3.amazonaws.com` (S3 bucket)
+	  * modified original DNS mapping: `downloads.binaryage.com` (DNS) -> `binaryage-leechgate.herokuapp.com` (Heroku)
 
   * Heroku
 	* fork & clone
 	* edit _config.php
-	* git commit
+	* `git commit`
 
-	* heroku create --stack cedar
-    * heroku config:add LEECHGATE_GAID=YOUR_GOOGLE_ANALYTICS_ID
-    * git push heroku master 
+	* `heroku create --stack cedar`
+    * `heroku config:add LEECHGATE_GAID=YOUR_GOOGLE_ANALYTICS_ID`
+    * `git push heroku master` 
 		
     * [http://devcenter.heroku.com/articles/config-vars]()
 	* [http://devcenter.heroku.com/articles/custom-domains]()
