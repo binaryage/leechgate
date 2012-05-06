@@ -10,7 +10,7 @@
 
 ### My motivation
 
-I host my download server for my Mac apps on Amazon S3. Also I host there Sparkle Updater's XML files. I want analytics!
+I host my download server for my Mac apps on Amazon S3. Also I host there XML files for Sparkle updater. I want analytics!
 
 ### How it works
 
