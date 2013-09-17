@@ -8,12 +8,12 @@ spl_autoload_register(function($className) {
 	if ($className[0] == '\\') {
 		$className = substr($className, 1);
 	}
-	
+
 	// leave if class should not be handled by this autoloader
 	if (strpos($className, 'UnitedPrototype\\GoogleAnalytics') !== 0) {
 		return;
 	}
-	
+
 	$path = __DIR__ . "/php-ga/src/" . strtr(substr($className, strlen('UnitedPrototype')), '\\', '/') . '.php';
 	require($path);
 });
@@ -27,7 +27,7 @@ function leechgate_expand_config(&$config) {
 	if (!isset($config['target'])) {
 		throw new Exception("Please specify config variable 'target' which is target postfix for redirection");
 	}
-	
+
 	// ask for host unless hardcoded in the config
 	if (!isset($config['host'])) {
 		$config['host'] = $_SERVER['HTTP_HOST'];
@@ -56,16 +56,21 @@ function leechgate_expand_config(&$config) {
 	if (!isset($config['redirect_url'])) {
 		$parts = explode(".", $config['normalized_host']);
 		$subparts = explode("-", $parts[0]);
-		array_push($subparts, $config["target"]);
+		if ($subparts[0]=="downloads") {
+			array_push($subparts, 2); // HACK: for downloads use target=2
+		} else {
+			array_push($subparts, $config["target"]);
+		}
+
 		$parts[0] = implode("-", $subparts);
 		$config['redirect_url'] = implode(".", $parts) . $config["query"];
 	}
-	
+
 	$actual_url = $_SERVER['HTTP_HOST'] . $config["query"];
 	if ($config['redirect_url'] == $actual_url) {
 		throw new Exception("Redirection loop! {$config['redirect_url']} => $actual_url");
 	}
-	
+
 	// parse product and product_version from the query
 	// I have a convention to name products like this:
 	// TotalFinder-X.Y.Z.dmg
@@ -101,7 +106,7 @@ function leechgate_track_ga($config) {
 		$session = new GoogleAnalytics\Session();
 		$event = new GoogleAnalytics\Event($config['normalized_host'], $config['product'], $config['product_version']);
 		$event->setNoninteraction(true);
-	
+
 		// track it!
 		$tracker->trackEvent($event, $session, $visitor);
 	} catch (Exception $e) {
