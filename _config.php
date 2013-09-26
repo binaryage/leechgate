@@ -2,7 +2,7 @@
 
 $leechgate_config = array(
     'gaid' => getenv("LEECHGATE_GAID"), // 'UA-XXXXXXX-Y'
-    'target'  => '1'
+    'target'  => 's3'
 );
 
 ?>
