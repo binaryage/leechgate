@@ -1,0 +1,3 @@
+[submodule "php-ga"]
+	path = php-ga
+	url = https://github.com/thomasbachem/php-ga.git
